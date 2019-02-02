@@ -7,16 +7,30 @@
 <body>
     <div class="container-fluid">
         <div class="container">
-            <h3 class="mt-1">GAMBAR</h3>
-            {% if filename %}
-            <img class="mb-2" src="{{ url_for('static', filename=filename) }}" height="300" width="500" alt="">
-            {% else %}
-            <img class="mb-2" src="{{ url_for('static', filename='no.jpg') }}" height="300" width="500" alt="">
-            {% endif %}
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-                <input type="file" name="gambar" id="gambar" accept="imager/*" required>
-                <button type="submit" class="btn btn-success">Upload</button>
-            </form>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="mt-1">GAMBAR</h3>
+                    {% if filename %}
+                    <img class="mb-2" src="{{ url_for('static', filename=filename) }}" height="300" width="500" alt="">
+                    {% else %}
+                    <img class="mb-2" src="{{ url_for('static', filename='no.jpg') }}" height="300" width="500" alt="">
+                    {% endif %}
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="gambar" id="gambar" accept="imager/*" required>
+                        <button type="submit" class="btn btn-success">Upload</button>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mt-1">Tombol</h3>
+                    <form class="mb-2" action="/grayscale" method="POST" enctype="multipart/form-data">
+                        {% if filename %}
+                        <button type="submit" class="btn btn-primry">Grayscale</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-primry" disabled>Grayscale</button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>
