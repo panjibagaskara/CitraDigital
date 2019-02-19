@@ -6,29 +6,118 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3 class="mt-1">GAMBAR</h3>
-                    {% if filename %}
-                    <img class="mb-2" src="{{ url_for('static', filename=filename) }}" height="300" width="500" alt="">
-                    {% else %}
-                    <img class="mb-2" src="{{ url_for('static', filename='no.jpg') }}" height="300" width="500" alt="">
-                    {% endif %}
-                    <form action="/upload" method="POST" enctype="multipart/form-data">
-                        <input type="file" name="gambar" id="gambar" accept="imager/*" required>
-                        <button type="submit" class="btn btn-success">Upload</button>
-                    </form>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <h3 class="mt-1">GAMBAR</h3>
+                {% if filename %}
+                <img class="mb-2" src="{{ url_for('static', filename=filename) }}" alt="">
+                {% else %}
+                <img class="mb-2" src="{{ url_for('static', filename='no.jpg') }}" alt="">
+                {% endif %}
+            </div>
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-2,5 col-md-2,5">
+                            <form action="/upload" method="POST" enctype="multipart/form-data">
+                                <input type="file" name="gambar" id="gambar" accept="imager/*" required>
+                                <button type="submit" class="btn btn-success">Unggah</button>
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <form action="/normal" method="POST" enctype="multipart/form-data">
+                                {% if filename %}
+                                <button type="submit" class="btn btn-success">Kembali ke Normal</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Kembali ke Normal</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <h3 class="mt-1">Tombol</h3>
-                    <form class="mb-2" action="/grayscale" method="POST" enctype="multipart/form-data">
-                        {% if filename %}
-                        <button type="submit" class="btn btn-primry">Grayscale</button>
-                        {% else %}
-                        <button type="submit" class="btn btn-primry" disabled>Grayscale</button>
-                        {% endif %}
-                    </form>
+            </div>
+            <div class="container-fluid">
+                <h3 class="mt-1 justify-content-center">FUNGSI</h3>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/grayscale" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Grayscale</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Grayscale</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/intensitasplus" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Intensitas +50</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas +50</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/intensitasminus" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Intensitas -50</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas -50</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/intensitaskali" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Intensitas x2</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas x2</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/intensitasbagi" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Intensitas /2</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas /2</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/perbesar" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Perbesar x2</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Perbesar x2</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/perkecil" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Perkecil x2</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Perkecil x2</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <form class="mb-2" action="/crop" method="POST" enctype="multipart/form-data">
+                            <h4>Crop</h4>
+                            <label for="widht">Widht : </label>
+                            <input type="number" name="widthf" id="widthf"> - <input type="number" name="widthd" id="widthd">
+                            <label for="widht">Height : </label>
+                            <input type="number" name="heightf" id="heightf"> - <input type="number" name="heightd" id="heightd">
+                            <button type="submit" class="btn btn-primry">Crop</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

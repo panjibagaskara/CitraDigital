@@ -50,11 +50,56 @@ def uploadimage():
         print(tujuan)
         file.save(tujuan)
         copyfile("gambar/img_process.jpg","gambar/img_process_normal.jpg")
-    return render_template('index.html',filename=nama)
+    return render_template('index.html',filename='img_process.jpg')
+
+@app.route('/normal', methods=['POST'])
+def normal():
+    copyfile("gambar/img_process_normal.jpg","gambar/img_process.jpg")
+    return render_template('index.html', filename='img_process.jpg')
 
 @app.route('/grayscale', methods=['POST'])
 def grayscaleimage():
     fungsi.grayscale()
+    return render_template('index.html', filename='img_process.jpg')
+  
+@app.route('/intensitasplus', methods=['POST'])
+def intensitasplus():
+    fungsi.intensitasplus()
+    return render_template('index.html', filename='img_process.jpg')
+
+@app.route('/intensitasminus', methods=['POST'])
+def intensitasminus():
+    fungsi.intensitasminus()
+    return render_template('index.html', filename='img_process.jpg')
+
+@app.route('/intensitaskali', methods=['POST'])
+def intensitaskali():
+    fungsi.intensitaskali()
+    return render_template('index.html', filename='img_process.jpg')
+
+@app.route('/intensitasbagi', methods=['POST'])
+def intensitasbagi():
+    fungsi.intensitasbagi()
+    return render_template('index.html', filename='img_process.jpg')
+
+@app.route('/perbesar', methods=['POST'])
+def perbesar():
+    fungsi.perbesar()
+    return render_template('index.html', filename='img_process.jpg')
+
+@app.route('/perkecil', methods=['POST'])
+def perkecil():
+    fungsi.perkecil()
+    return render_template('index.html', filename='img_process.jpg')
+
+@app.route('/crop', methods=['POST'])
+def crop():
+    widthf = request.form['widthf']
+    widthd = request.form['widthd']
+    heightf = request.form['heightf']
+    heightd = request.form['heightd']
+    widthf,widthd,heightf,heightd = fungsi.parsing(widthf,widthd,heightf,heightd)
+    fungsi.crop(widthf,widthd,heightf,heightd)
     return render_template('index.html', filename='img_process.jpg')
 
 if __name__ == "__main__":
