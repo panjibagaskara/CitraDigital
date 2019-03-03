@@ -1,5 +1,5 @@
 import os
-import fungsi
+import fungsiclass
 from flask import Flask, render_template, request, url_for, make_response
 from shutil import copyfile
 from functools import wraps, update_wrapper
@@ -50,47 +50,50 @@ def uploadimage():
         print(tujuan)
         file.save(tujuan)
         copyfile("gambar/img_process.jpg","gambar/img_process_normal.jpg")
-    return render_template('index.html',filename='img_process.jpg')
+    global image
+    image = fungsiclass.gambar()
+    return render_template('index.html',filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/normal', methods=['POST'])
 def normal():
     copyfile("gambar/img_process_normal.jpg","gambar/img_process.jpg")
-    return render_template('index.html', filename='img_process.jpg')
+    image.resetNormal()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/grayscale', methods=['POST'])
 def grayscaleimage():
-    fungsi.grayscale()
-    return render_template('index.html', filename='img_process.jpg')
+    image.grayscale()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
   
 @app.route('/intensitasplus', methods=['POST'])
 def intensitasplus():
-    fungsi.intensitasplus()
-    return render_template('index.html', filename='img_process.jpg')
+    image.intensitasplus()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/intensitasminus', methods=['POST'])
 def intensitasminus():
-    fungsi.intensitasminus()
-    return render_template('index.html', filename='img_process.jpg')
+    image.intensitasminus()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/intensitaskali', methods=['POST'])
 def intensitaskali():
-    fungsi.intensitaskali()
-    return render_template('index.html', filename='img_process.jpg')
+    image.intensitaskali()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/intensitasbagi', methods=['POST'])
 def intensitasbagi():
-    fungsi.intensitasbagi()
-    return render_template('index.html', filename='img_process.jpg')
+    image.intensitasbagi()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/perbesar', methods=['POST'])
 def perbesar():
-    fungsi.perbesar()
-    return render_template('index.html', filename='img_process.jpg')
+    image.perbesar()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/perkecil', methods=['POST'])
 def perkecil():
-    fungsi.perkecil()
-    return render_template('index.html', filename='img_process.jpg')
+    image.perkecil()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/crop', methods=['POST'])
 def crop():
@@ -98,9 +101,9 @@ def crop():
     widthd = request.form['widthd']
     heightf = request.form['heightf']
     heightd = request.form['heightd']
-    widthf,widthd,heightf,heightd = fungsi.parsing(widthf,widthd,heightf,heightd)
-    fungsi.crop(widthf,widthd,heightf,heightd)
-    return render_template('index.html', filename='img_process.jpg')
+    widthf,widthd,heightf,heightd = image.parsing(widthf,widthd,heightf,heightd)
+    image.crop(widthf,widthd,heightf,heightd)
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 if __name__ == "__main__":
     app.run(debug=True)
