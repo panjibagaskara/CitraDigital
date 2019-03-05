@@ -105,5 +105,14 @@ def crop():
     image.crop(widthf,widthd,heightf,heightd)
     return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
+@app.route('/histogram', methods=['POST'])
+def histogram():
+    image.histogram()
+    return render_template('index.html', filename='img_process.jpg', filename1='histo.jpg', width=image.width, height=image.height)
+    
+@app.route('/histeq', methods=['POST'])
+def histeq():
+    image.histeq()
+    return render_template('index.html', filename='img_process.jpg', filename1='histo.jpg', filename2='histeq.jpg', width=image.width, height=image.height)
 if __name__ == "__main__":
     app.run(debug=True)

@@ -106,7 +106,38 @@
                             {% endif %}
                         </form>
                     </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/histogram" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Histogram</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Histogram</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/histeq" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Histogram Equalization</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Histogram Equalization</button>
+                            {% endif %}
+                        </form>
+                    </div>
                 </div>
+                {% if filename %}
+                <h3 class="mt-1">Histogram</h3>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <img class="mb-2" width="500" height="400" src="{{ url_for('static', filename=filename1) }}" alt="">
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <img class="mb-2" width="500" height="400" src="{{ url_for('static', filename=filename2) }}" alt="">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <form class="mb-2" action="/crop" method="POST" enctype="multipart/form-data">

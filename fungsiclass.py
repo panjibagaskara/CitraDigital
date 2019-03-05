@@ -1,19 +1,24 @@
 from PIL import Image
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
 
 class gambar:
     
-    array = []
+    array,histo,pixel = [],[],[]
     width,height = 0,0
 
     def __init__(self):
         img = Image.open('gambar/img_process.jpg')
         self.width, self.height = img.size
         self.array = [[img.getpixel((i,j)) for j in range(self.height)] for i in range(self.width)]
+        self.pixel, self.histo = [],[]
     
     def resetNormal(self):
         img = Image.open('gambar/img_process_normal.jpg')
         self.width, self.height = img.size
         self.array = [[img.getpixel((i,j)) for j in range(self.height)] for i in range(self.width)]
+        self.pixel, self.histo = [],[]
 
     def totalRGB(self):
         r,g,b = 0,0,0 # Inisialisasi variable untuk menampung nilai r,g,b
@@ -38,10 +43,12 @@ class gambar:
         for i in range(self.width): # Menjelajahi gambar setiap pixel
             for j in range(self.height): # representasi array 2D
                 pixel = self.array[i][j] # Mendapatkan pixel dari titik i,j
-                red = pixel[0] # Mendapatkan nilai dari array red pada titik i,j
-                green = pixel[1] # Mendapatkan nilai dari array green pada titik i,j
-                blue = pixel[2] # Mendapatkan nilai dari array blue pada titik i,j
-                gray = (red * (r/total)) + (green * (g/total)) + (blue * (b/total)) # Menghitung nilai gray pada pixel i,j
+                gray = round((pixel[0] * (r/total)) + (pixel[1] * (g/total)) + (pixel[2] * (b/total))) # Menghitung nilai gray pada pixel i,j
+                pxl = list(pixel)
+                pxl[0] = gray
+                pxl[1] = gray
+                pxl[2] = gray
+                self.array[i][j] = tuple(pxl)
                 pixels[i,j] = (int(gray), int(gray), int(gray)) # Memasukkan pixel i,j pada gambar baru dengan nilai gray
         new.save('gambar/img_process.jpg') # Save gambar yg sudah diproses
     
@@ -175,3 +182,66 @@ class gambar:
                 temp_i += 1 # Increment temp_i
         new.save('gambar/img_process.jpg') # Save gambar yg sudah diproses 
         self.__init__()
+    
+    def histogram(self): # Fungsi Histogram
+            self.grayscale() # Mengubah gambar menjadi grayscale
+            self.pixel, self.histo = [],[] # inisiasi array untuk menyimpan frekuensi
+            for idx in range(0,256): # Perulangan untuk menghitung frekuensi
+                    grey = 0 # variabel untuk menghitung
+                    for i in range(self.width): # Perulangan pada gambar
+                            for j in range(self.height):
+                                    pixel = self.array[i][j] 
+                                    if pixel[0] == idx: # Jika pixel r/g/b samadengan idx 
+                                        grey += 1 # variabel ditambah 1
+                    self.histo.append(grey) # Memasukkan hasil perhitungan kedalam list
+                    self.pixel.append(idx) # Memasukkan pixel kedalam list
+            plt.bar(self.pixel,self.histo,color='grey') # Plot histogram
+            plt.ylim((0,15000)) # Pembatasan y axis
+            plt.title('Histogram Awal') # Judul grafik
+            plt.savefig('gambar/histo.jpg') # save grafik
+            plt.clf() # Reset plot
+
+    def histeq(self):
+            new = Image.new("RGB",(self.width,self.height),color=255) # Membuat gambar baru dengan width dan height sesuai dengan gambar
+            pixels = new.load() # Memuat gambar baru
+            total = sum(self.histo) # Menghitung jumlah semua elemen yang ada didalam list. Cth : a = [1,2,3] jumlah = 6
+            cek = True # Inisialisasi variable cek
+            i = -1 # Inisialisasi variabel i untuk mencari batas bawah 1
+            j = 256 # Inisialisasi variable j untuk mencari batas atas 1
+            while i < 256 and cek: # Perulangan dari depan
+                    i += 1 
+                    if self.histo[i]*100/total >= 0.1: # Jika frekuensi histo pixel i * 100 dibagi dengan total >= 0.1
+                            bb1 = i # Set batas bawah 1 dengan i
+                            cek = False # Set False supaya perulangan berhenti
+            cek = True # Inisialisasi variable cek
+            while j >= 0 and cek: # Perulangan dari belakang
+                    j -= 1
+                    if self.histo[j]*100/total >= 0.1: # Jika frekuensi histo pixel j * 100 dibagi dengan total >= 0.1
+                            ba1 = j # Set batas atas 1 dengan j
+                            cek = False  # Set False supaya perulangan berhenti
+            bb2 = 0 # Set batas bawah 2 dengan 0
+            ba2 = 255 # Set batas atas 2 dengan 255
+            for k in range(self.width): # Perulangan pada gambar
+                    for l in range(self.height):
+                            pixel = self.array[k][l]
+                            pxl = list(pixel)
+                            pxl[0] = round(bb2 + ((pxl[0]-bb2)*((ba2-bb2)/(ba1-bb1)))) # dihitung menggunakan rumus yg bapak berikan
+                            pxl[2] = pxl[1] = pxl[0]
+                            self.array[k][l] = tuple(pxl)
+                            pixels[k,l] = self.array[k][l] # Set pixel pada gambar baru
+            new.save('gambar/img_process.jpg') # Save gambar yg sudah diproses 
+            self.__init__() # Init gambar baru
+            for idx in range(0,256): # Perulangan untuk menghitung frekuensi
+                    grey = 0 # variabel untuk menghitung
+                    for i in range(self.width): # Perulangan pada gambar
+                            for j in range(self.height):
+                                    pixel = self.array[i][j]  
+                                    if pixel[0] == idx: # Jika pixel r/g/b samadengan idx
+                                        grey += 1 # variabel ditambah 1
+                    self.histo.append(grey) # Memasukkan frekuensi kedalam list
+                    self.pixel.append(idx) # Memasukkan pixel kedalam list
+            plt.bar(self.pixel,self.histo,color='grey') # Plot histogram
+            plt.ylim((0,15000)) # set y axis
+            plt.title('Histogram Equalization') # Set judul
+            plt.savefig('gambar/histeq.jpg') # Save plot
+            plt.clf() # reset plot
