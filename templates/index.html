@@ -125,6 +125,35 @@
                         </form>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/blur" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Blur</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Blur</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="/sharp" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Sharp</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Sharp</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <form class="mb-2" action="" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-block btn-primry">Edge</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-block btn-primry" disabled>Edge</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
                 {% if filename %}
                 <h3 class="mt-1">Histogram</h3>
                 <div class="container-fluid">

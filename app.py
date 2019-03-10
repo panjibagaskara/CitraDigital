@@ -114,5 +114,16 @@ def histogram():
 def histeq():
     image.histeq()
     return render_template('index.html', filename='img_process.jpg', filename1='histo.jpg', filename2='histeq.jpg', width=image.width, height=image.height)
+
+@app.route('/blur', methods=['POST'])
+def blur():
+    image.blur()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+    
+@app.route('/sharp', methods=['POST'])
+def sharp():
+    image.sharp()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+
 if __name__ == "__main__":
     app.run(debug=True)

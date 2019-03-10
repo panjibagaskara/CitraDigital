@@ -245,3 +245,97 @@ class gambar:
             plt.title('Histogram Equalization') # Set judul
             plt.savefig('gambar/histeq.jpg') # Save plot
             plt.clf() # reset plot
+
+    def proseskernel(self,kernel):
+            new = Image.new("RGB",(self.width,self.height),color=255) # Membuat gambar baru dengan width dan height sesuai dengan gambar
+            pixels = new.load() # Memuat gambar baru
+            for i in range(self.width):
+                    for j in range(self.height):
+                            pixel = self.array[i][j]
+                            pxl = list(pixel)
+                            if i == 0 and j == 0:
+                                e = self.array[i][j+1]
+                                s = self.array[i+1][j]
+                                se = self.array[i+1][j+1]        
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[1][2]*e[0] + kernel[2][1]*s[0] + kernel[2][2]*se[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[1][2]*e[1] + kernel[2][1]*s[1] + kernel[2][2]*se[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[1][2]*e[2] + kernel[2][1]*s[2] + kernel[2][2]*se[2])
+                            elif i == 0 and j == self.height-1:
+                                w = self.array[i][j-1]
+                                s = self.array[i+1][j]
+                                sw = self.array[i+1][j-1]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[1][0]*w[0] + kernel[2][1]*s[0] + kernel[2][0]*sw[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[1][0]*w[1] + kernel[2][1]*s[1] + kernel[2][0]*sw[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[1][0]*w[2] + kernel[2][1]*s[2] + kernel[2][0]*sw[2])
+                            elif i == self.width-1 and j == 0:
+                                n = self.array[i-1][j]
+                                ne = self.array[i-1][j+1]
+                                e = self.array[i][j+1]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][2]*e[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][2]*e[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][2]*e[2])
+                            elif i == self.width-1 and j == self.height-1:
+                                n = self.array[i-1][j]
+                                nw = self.array[i-1][j-1]
+                                w = self.array[i][j-1]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[0][1]*n[0] + kernel[0][0]*nw[0] + kernel[1][0]*w[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[0][1]*n[1] + kernel[0][0]*nw[1] + kernel[1][0]*w[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[0][1]*n[2] + kernel[0][0]*nw[2] + kernel[1][0]*w[2])
+                            elif i == 0:
+                                w = self.array[i][j-1]
+                                sw = self.array[i+1][j-1]
+                                s = self.array[i+1][j]
+                                se = self.array[i+1][j+1]
+                                e = self.array[i][j+1]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[1][0]*w[0] + kernel[1][2]*e[0] + kernel[2][0]*sw[0] + kernel[2][1]*s[0] + kernel[2][2]*se[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[1][0]*w[1] + kernel[1][2]*e[1] + kernel[2][0]*sw[1] + kernel[2][1]*s[1] + kernel[2][2]*se[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[1][0]*w[2] + kernel[1][2]*e[2] + kernel[2][0]*sw[2] + kernel[2][1]*s[2] + kernel[2][2]*se[2])
+                            elif i == self.width-1:
+                                w = self.array[i][j-1]
+                                nw = self.array[i-1][j-1]
+                                n = self.array[i-1][j]
+                                ne = self.array[i-1][j+1]
+                                e = self.array[i][j+1]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[1][0]*w[0] + kernel[0][0]*nw[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][2]*e[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[1][0]*w[1] + kernel[0][0]*nw[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][2]*e[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[1][0]*w[2] + kernel[0][0]*nw[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][2]*e[2])
+                            elif j == 0:
+                                n = self.array[i-1][j]
+                                ne = self.array[i-1][j+1]
+                                e = self.array[i][j+1]
+                                se = self.array[i+1][j+1]
+                                s = self.array[i+1][j]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][2]*e[0] + kernel[2][2]*se[0] + kernel[2][1]*s[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][2]*e[1] + kernel[2][2]*se[1] + kernel[2][1]*s[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][2]*e[2] + kernel[2][2]*se[2] + kernel[2][1]*s[2])
+                            elif j == self.height-1:
+                                n = self.array[i-1][j]
+                                nw = self.array[i-1][j-1]
+                                w = self.array[i][j-1]
+                                sw = self.array[i+1][j-1]
+                                s = self.array[i+1][j]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[0][1]*n[0] + kernel[0][0]*nw[0] + kernel[1][0]*w[0] + kernel[2][0]*sw[0] + kernel[2][1]*s[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[0][1]*n[1] + kernel[0][0]*nw[1] + kernel[1][0]*w[1] + kernel[2][0]*sw[1] + kernel[2][1]*s[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[0][1]*n[2] + kernel[0][0]*nw[2] + kernel[1][0]*w[2] + kernel[2][0]*sw[2] + kernel[2][1]*s[2])
+                            else:
+                                n = self.array[i-1][j]
+                                ne = self.array[i-1][j+1]
+                                e = self.array[i][j+1]
+                                se = self.array[i+1][j+1]
+                                s = self.array[i+1][j]
+                                sw = self.array[i+1][j-1]
+                                w = self.array[i][j-1]
+                                nw = self.array[i-1][j-1]
+                                pxl[0] = round(kernel[1][1]*pxl[0] + kernel[0][0]*nw[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][0]*w[0] + kernel[1][2]*e[0] + kernel[2][0]*sw[0] + kernel[2][1]*s[0] + kernel[2][2]*se[0])
+                                pxl[1] = round(kernel[1][1]*pxl[1] + kernel[0][0]*nw[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][0]*w[1] + kernel[1][2]*e[1] + kernel[2][0]*sw[1] + kernel[2][1]*s[1] + kernel[2][2]*se[1])
+                                pxl[2] = round(kernel[1][1]*pxl[2] + kernel[0][0]*nw[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][0]*w[2] + kernel[1][2]*e[2] + kernel[2][0]*sw[2] + kernel[2][1]*s[2] + kernel[2][2]*se[2])
+                            self.array[i][j] = tuple(pxl)
+                            pixels[i,j] = self.array[i][j]
+            new.save('gambar/img_process.jpg')
+
+    def blur(self):
+            kernel = [[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]
+            self.proseskernel(kernel)
+    def sharp(self):
+            kernel = [[0,-1,0],[-1,5,-1],[0,-1,0]]
+            self.proseskernel(kernel)
