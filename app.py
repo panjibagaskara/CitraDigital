@@ -125,5 +125,11 @@ def sharp():
     image.sharp()
     return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
+
+@app.route('/edge', methods=['POST'])
+def edge():
+    image.edge()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+
 if __name__ == "__main__":
     app.run(debug=True)
