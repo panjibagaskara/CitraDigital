@@ -249,75 +249,84 @@ class gambar:
     def proseskernel(self,kernel):
             new = Image.new("RGB",(self.width,self.height),color=255) # Membuat gambar baru dengan width dan height sesuai dengan gambar
             pixels = new.load() # Memuat gambar baru
-            newarr = np.asarray(self.array, dtype=np.int)
-            for i in range(self.width):
-                    for j in range(self.height):
-                            pixel = self.array[i][j]
-                            if i == 0 and j == 0:
-                                e = self.array[i][j+1]
-                                s = self.array[i+1][j]
-                                se = self.array[i+1][j+1]    
+            newarr = np.asarray(self.array, dtype=np.int) # Membuat duplikasi array gambar
+            for i in range(self.width): # Melakukan penjelajahan
+                    for j in range(self.height): # Pada Gambar
+                            pixel = self.array[i][j] # Mengambil nilai pixel dari index i,j
+                            if i == 0 and j == 0: # Jika pixel sedang berada di pojok kiri atas
+                                e = self.array[i][j+1] # Mengambil nilai timur dari pixel
+                                s = self.array[i+1][j] # Mengambil nilai selatan dari pixel
+                                se = self.array[i+1][j+1] # Mengambil nilai tenggara dari pixel
+                                # Menhitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[1][2]*e[0] + kernel[2][1]*s[0] + kernel[2][2]*se[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[1][2]*e[1] + kernel[2][1]*s[1] + kernel[2][2]*se[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[1][2]*e[2] + kernel[2][1]*s[2] + kernel[2][2]*se[2])
-                            elif i == 0 and j == self.height-1:
-                                w = self.array[i][j-1]
-                                s = self.array[i+1][j]
-                                sw = self.array[i+1][j-1]
+                            elif i == 0 and j == self.height-1: # Jika pixel sedang berada di pojok kanan atas
+                                w = self.array[i][j-1] # Mengambil nilai barat dari pixel
+                                s = self.array[i+1][j] # Mengambil nilai selatan dari pixel
+                                sw = self.array[i+1][j-1] # Mengambil nilai barat daya dari pixel
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[1][0]*w[0] + kernel[2][1]*s[0] + kernel[2][0]*sw[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[1][0]*w[1] + kernel[2][1]*s[1] + kernel[2][0]*sw[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[1][0]*w[2] + kernel[2][1]*s[2] + kernel[2][0]*sw[2])
-                            elif i == self.width-1 and j == 0:
-                                n = self.array[i-1][j]
-                                ne = self.array[i-1][j+1]
-                                e = self.array[i][j+1]
+                            elif i == self.width-1 and j == 0: # Jika pixel sedang berada di pojok kiri bawah
+                                n = self.array[i-1][j] # Mengambil nilai utara dari pixel
+                                ne = self.array[i-1][j+1] # Mengambil nilai timur laut dari pixel
+                                e = self.array[i][j+1] # Mengambil nilai timur dari pixel
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][2]*e[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][2]*e[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][2]*e[2])
-                            elif i == self.width-1 and j == self.height-1:
-                                n = self.array[i-1][j]
-                                nw = self.array[i-1][j-1]
-                                w = self.array[i][j-1]
+                            elif i == self.width-1 and j == self.height-1: # Jika pixel berada di pojok kanan bawah
+                                n = self.array[i-1][j] # Mengambil nilai utara dari pixel
+                                nw = self.array[i-1][j-1] # Mengambil nilai barat laut dari pixel
+                                w = self.array[i][j-1] # Mengambil nilai barat dari pixel
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[0][1]*n[0] + kernel[0][0]*nw[0] + kernel[1][0]*w[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[0][1]*n[1] + kernel[0][0]*nw[1] + kernel[1][0]*w[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[0][1]*n[2] + kernel[0][0]*nw[2] + kernel[1][0]*w[2])
-                            elif i == 0:
-                                w = self.array[i][j-1]
-                                sw = self.array[i+1][j-1]
-                                s = self.array[i+1][j]
-                                se = self.array[i+1][j+1]
-                                e = self.array[i][j+1]
+                            elif i == 0: # Jika pixel berada di bagian atas gambar
+                                w = self.array[i][j-1] # Mengambil nilai barat dari pixel
+                                sw = self.array[i+1][j-1] # Mengambil nilai barat daya dari pixel
+                                s = self.array[i+1][j] # Mengambil nilai selatan dari pixel
+                                se = self.array[i+1][j+1] # Mengambil nilai tenggara dari pixel
+                                e = self.array[i][j+1] # Mengambil nilai timur dari pixel
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[1][0]*w[0] + kernel[1][2]*e[0] + kernel[2][0]*sw[0] + kernel[2][1]*s[0] + kernel[2][2]*se[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[1][0]*w[1] + kernel[1][2]*e[1] + kernel[2][0]*sw[1] + kernel[2][1]*s[1] + kernel[2][2]*se[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[1][0]*w[2] + kernel[1][2]*e[2] + kernel[2][0]*sw[2] + kernel[2][1]*s[2] + kernel[2][2]*se[2])
-                            elif i == self.width-1:
-                                w = self.array[i][j-1]
-                                nw = self.array[i-1][j-1]
-                                n = self.array[i-1][j]
-                                ne = self.array[i-1][j+1]
-                                e = self.array[i][j+1]
+                            elif i == self.width-1: # Jika pixel berada di bagian bawah gambar 
+                                w = self.array[i][j-1] # Mengambil nilai barat dari pixel
+                                nw = self.array[i-1][j-1] # Mengambil nilai barat laut dari pixel
+                                n = self.array[i-1][j] # Mengambil nilai utara dari pixel
+                                ne = self.array[i-1][j+1] # Mengambil nilai timur laut dari pixel
+                                e = self.array[i][j+1] # Mengambil nilai timur dari pixel
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[1][0]*w[0] + kernel[0][0]*nw[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][2]*e[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[1][0]*w[1] + kernel[0][0]*nw[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][2]*e[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[1][0]*w[2] + kernel[0][0]*nw[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][2]*e[2])
-                            elif j == 0:
-                                n = self.array[i-1][j]
-                                ne = self.array[i-1][j+1]
-                                e = self.array[i][j+1]
-                                se = self.array[i+1][j+1]
-                                s = self.array[i+1][j]
+                            elif j == 0: # Jika pixel berada di bagian kiri gambar
+                                n = self.array[i-1][j] # Mengambil nilai utara dari pixel
+                                ne = self.array[i-1][j+1] # Mengambil nilai timur laut dari pixel
+                                e = self.array[i][j+1] # Mengambil nilai timur dari pixel
+                                se = self.array[i+1][j+1] # Mengambil nilai tenggara dari pixel
+                                s = self.array[i+1][j] # Mengambil nilai selatan dari pixel
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][2]*e[0] + kernel[2][2]*se[0] + kernel[2][1]*s[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][2]*e[1] + kernel[2][2]*se[1] + kernel[2][1]*s[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][2]*e[2] + kernel[2][2]*se[2] + kernel[2][1]*s[2])
-                            elif j == self.height-1:
-                                n = self.array[i-1][j]
-                                nw = self.array[i-1][j-1]
-                                w = self.array[i][j-1]
-                                sw = self.array[i+1][j-1]
-                                s = self.array[i+1][j]
+                            elif j == self.height-1: # Jika pixel berada di bagian kanan gambar
+                                n = self.array[i-1][j] # Mengambil nilai utara dari pixel
+                                nw = self.array[i-1][j-1] # Mengambil nilai barat laut dari pixel
+                                w = self.array[i][j-1] # Mengambil nilai barat dari pixel
+                                sw = self.array[i+1][j-1] # Mengambil nilai barat daya dari pixel
+                                s = self.array[i+1][j] # Mengambil nilai selatan dari pixel
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[0][1]*n[0] + kernel[0][0]*nw[0] + kernel[1][0]*w[0] + kernel[2][0]*sw[0] + kernel[2][1]*s[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[0][1]*n[1] + kernel[0][0]*nw[1] + kernel[1][0]*w[1] + kernel[2][0]*sw[1] + kernel[2][1]*s[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[0][1]*n[2] + kernel[0][0]*nw[2] + kernel[1][0]*w[2] + kernel[2][0]*sw[2] + kernel[2][1]*s[2])
-                            else:
+                            else: # Jika pixel tidak berada di sisi gambar
+                                # Mengambil nilai sekitar pixel
                                 n = self.array[i-1][j]
                                 ne = self.array[i-1][j+1]
                                 e = self.array[i][j+1]
@@ -326,26 +335,31 @@ class gambar:
                                 sw = self.array[i+1][j-1]
                                 w = self.array[i][j-1]
                                 nw = self.array[i-1][j-1]
+                                # Menghitung menggunakan rumus
                                 red = round(kernel[1][1]*pixel[0] + kernel[0][0]*nw[0] + kernel[0][1]*n[0] + kernel[0][2]*ne[0] + kernel[1][0]*w[0] + kernel[1][2]*e[0] + kernel[2][0]*sw[0] + kernel[2][1]*s[0] + kernel[2][2]*se[0])
                                 green = round(kernel[1][1]*pixel[1] + kernel[0][0]*nw[1] + kernel[0][1]*n[1] + kernel[0][2]*ne[1] + kernel[1][0]*w[1] + kernel[1][2]*e[1] + kernel[2][0]*sw[1] + kernel[2][1]*s[1] + kernel[2][2]*se[1])
                                 blue = round(kernel[1][1]*pixel[2] + kernel[0][0]*nw[2] + kernel[0][1]*n[2] + kernel[0][2]*ne[2] + kernel[1][0]*w[2] + kernel[1][2]*e[2] + kernel[2][0]*sw[2] + kernel[2][1]*s[2] + kernel[2][2]*se[2])
-                            if len(newarr[i][j]) == 4:
+                            if len(newarr[i][j]) == 4: # Jika format file .png
                                 newarr[i][j] = [red,green,blue,255]
-                            else:
+                            else: # Jika format file .jpg/.jpeg
                                 newarr[i][j] = [red,green,blue]
                         #     self.array[i][j] = tuple(newarr[i][j])
                             pixels[i,j] = tuple(newarr[i][j])
             new.save('gambar/img_process.jpg')
             self.__init__()
 
+    
+    # Fungsi blur
     def blur(self):
             kernel = [[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]
             self.proseskernel(kernel)
             
+    # Fungsi sharp
     def sharp(self):
             kernel = [[0,-1,0],[-1,5,-1],[0,-1,0]]
             self.proseskernel(kernel)
-
+    
+    # Fungsi edge
     def edge(self):
             kernel = [[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]
             self.proseskernel(kernel)
