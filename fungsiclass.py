@@ -336,6 +336,7 @@ class gambar:
                         #     self.array[i][j] = tuple(newarr[i][j])
                             pixels[i,j] = tuple(newarr[i][j])
             new.save('gambar/img_process.jpg')
+            self.__init__()
 
     def blur(self):
             kernel = [[0.0625,0.125,0.0625],[0.125,0.25,0.125],[0.0625,0.125,0.0625]]

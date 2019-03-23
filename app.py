@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, url_for, make_response
 from shutil import copyfile
 from functools import wraps, update_wrapper
 from datetime import datetime
+from gevent.pywsgi import WSGIServer
 
 app = Flask(__name__, static_folder='gambar')
 
@@ -132,4 +133,6 @@ def edge():
     return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    http_server = WSGIServer(('',5000),app)
+    http_server.serve_forever()
