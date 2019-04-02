@@ -132,7 +132,37 @@ def edge():
     image.edge()
     return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
+@app.route('/threshold_view', methods=['GET', 'POST'])
+def threshold_view():
+    return render_template('threshold.html', filename='img_process.jpg', width=image.width, height=image.height)
+
+@app.route('/region_view', methods=['GET', 'POST'])
+def region_view():
+    return render_template('region.html', filename='img_process.jpg', width=image.width, height=image.height)
+
+@app.route('/back', methods=['GET', 'POST'])
+def back():
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+
+@app.route('/threshold', methods=['POST'])
+def threshold():
+    t_red = request.form['red']
+    t_green = request.form['green']
+    t_blue = request.form['blue']
+    image.thresholdbase(t_red,t_green,t_blue)
+    return render_template('threshold.html', filename='img_process.jpg', filename1='img_threshold.jpg', width=image.width, height=image.height)
+
+
+@app.route('/region', methods=['POST'])
+def region():
+    t = request.form['thr']
+    x = request.form['x']
+    y = request.form['y']
+    Seed = (int(x),int(y))
+    image.seedRegion(t, Seed)
+    return render_template('region.html', filename='img_process.jpg', filename1='img_threshold.jpg', width=image.width, height=image.height)
+
 if __name__ == "__main__":
-    # app.run(debug=True)
-    http_server = WSGIServer(('',5000),app)
-    http_server.serve_forever()
+    app.run(debug=True)
+    # http_server = WSGIServer(('0.0.0.0',5000),app)
+    # http_server.serve_forever()

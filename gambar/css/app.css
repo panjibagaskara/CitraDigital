@@ -15,7 +15,7 @@ header{
     font-weight: 800;
     letter-spacing: 1px;
     line-height: 1;
-    text-shadow: #EDEDED 3px 2px 0;
+    text-shadow: #555 3px 2px 0;
 }
 
 footer{
@@ -31,6 +31,7 @@ footer{
 
 main{
     background-color: aliceblue;
+    padding: 10px 0;
 }
 
 .center-inline{
@@ -57,4 +58,43 @@ input[type="file"]{
     border-radius: 5px;
     height: 35px;
     font-weight: bold;
+}
+
+ul,h3{
+    text-align: center;    
+}
+
+#navigasi{
+    margin: 20px 0px;
+}
+
+li{
+    list-style-type: none;
+    display: inline;
+    padding: 5px 10px;
+    border: 2px solid black;
+    border-radius: 6px;
+    transition: all 0.2s linear;
+    margin: 5px 3px;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+}
+
+li:hover{
+    border: 2px solid #28a745;
+    border-width: 5px;
+    background: #28a745;
+    cursor: pointer;
+}
+
+.hiddensec{
+    overflow: hidden;
+    max-height: 0px;
+    transition: max-height 0.8s ease-in-out;
+}
+
+.taskopen{
+    max-height: 300px;
+    transition: max-height 0.8s ease-in-out;
 }

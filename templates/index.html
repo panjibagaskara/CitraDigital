@@ -23,6 +23,66 @@
                     $('#namefile').val('Silahkan Pilih File');
                 }
             });
+            $('#2').click(function(){
+                $('#task2').addClass('taskopen');
+                $('#task2').removeClass('hiddensec');
+                $('#task3').addClass('hiddensec');
+                $('#task3').removeClass('taskopen');
+                $('#task4').addClass('hiddensec');
+                $('#task4').removeClass('taskopen');
+                $('#task5').addClass('hiddensec');
+                $('#task5').removeClass('taskopen');
+                $('#task6').addClass('hiddensec');
+                $('#task6').removeClass('taskopen');
+            });
+            $('#3').click(function(){
+                $('#task3').addClass('taskopen');
+                $('#task3').removeClass('hiddensec');
+                $('#task2').addClass('hiddensec');
+                $('#task2').removeClass('taskopen');
+                $('#task4').addClass('hiddensec');
+                $('#task4').removeClass('taskopen');
+                $('#task5').addClass('hiddensec');
+                $('#task5').removeClass('taskopen');
+                $('#task6').addClass('hiddensec');
+                $('#task6').removeClass('taskopen');
+            });
+            $('#4').click(function () {
+                $('#task4').addClass('taskopen');
+                $('#task4').removeClass('hiddensec');
+                $('#task2').addClass('hiddensec');
+                $('#task2').removeClass('taskopen');
+                $('#task3').addClass('hiddensec');
+                $('#task3').removeClass('taskopen');
+                $('#task5').addClass('hiddensec');
+                $('#task5').removeClass('taskopen');
+                $('#task6').addClass('hiddensec');
+                $('#task6').removeClass('taskopen');
+            });
+            $('#5').click(function () {
+                $('#task5').addClass('taskopen');
+                $('#task5').removeClass('hiddensec');
+                $('#task2').addClass('hiddensec');
+                $('#task2').removeClass('taskopen');
+                $('#task3').addClass('hiddensec');
+                $('#task3').removeClass('taskopen');
+                $('#task4').addClass('hiddensec');
+                $('#task4').removeClass('taskopen');
+                $('#task6').addClass('hiddensec');
+                $('#task6').removeClass('taskopen');
+            });
+            $('#6').click(function(){
+                $('#task6').addClass('taskopen');
+                $('#task6').removeClass('hiddensec');
+                $('#task2').addClass('hiddensec');
+                $('#task2').removeClass('taskopen');
+                $('#task3').addClass('hiddensec');
+                $('#task3').removeClass('taskopen');
+                $('#task4').addClass('hiddensec');
+                $('#task4').removeClass('taskopen');
+                $('#task5').addClass('hiddensec');
+                $('#task5').removeClass('taskopen');
+            });
         });
     </script>
 </head>
@@ -72,152 +132,192 @@
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid">
-                    <h3 class="mt-1 justify-content-center">FUNGSI</h3>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4">
-                            <form class="mb-2" action="/grayscale" method="POST" enctype="multipart/form-data">
-                                {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Grayscale</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Grayscale</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
+                <hr>
+                <div id="navigasi" class="container-fluid">
+                    <ul>
+                        <li id="2">Task 2</li>
+                        <li id="3">Task 3</li>
+                        <li id="4">Task 4</li>
+                        <li id="5">Task 5</li>
+                        <li id="6">Task 6</li>
+                    </ul>
+                </div>
+                <div class="container-fluid hiddensec" id="task2">
+                    <h3>Task 2</h3>
+                    <div class="d-flex justify-content-center">
+                        <form class="mb-2" action="/grayscale" method="POST" enctype="multipart/form-data">
+                            {% if filename %}
+                            <button type="submit" class="btn btn-success">Grayscale</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-success" disabled>Grayscale</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <div class="container-fluid hiddensec" id="task3">
+                    <h3>Task 3</h3>
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="p-1">
                             <form class="mb-2" action="/intensitasplus" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Intensitas +50</button>
+                                <button type="submit" class="btn btn-success">Intensitas +50</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas +50</button>
+                                <button type="submit" class="btn btn-success" disabled>Intensitas +50</button>
                                 {% endif %}
                             </form>
                         </div>
-                        <div class="col-lg-4 col-md-4">
+                        <div class="p-1">
                             <form class="mb-2" action="/intensitasminus" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Intensitas -50</button>
+                                <button type="submit" class="btn btn-success">Intensitas -50</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas -50</button>
+                                <button type="submit" class="btn btn-success" disabled>Intensitas -50</button>
                                 {% endif %}
                             </form>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4">
+                        <div class="p-1">
                             <form class="mb-2" action="/intensitaskali" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Intensitas x2</button>
+                                <button type="submit" class="btn btn-success">Intensitas x2</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas x2</button>
+                                <button type="submit" class="btn btn-success" disabled>Intensitas x2</button>
                                 {% endif %}
                             </form>
                         </div>
-                        <div class="col-lg-4 col-md-4">
+                        <div class="p-1">
                             <form class="mb-2" action="/intensitasbagi" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Intensitas /2</button>
+                                <button type="submit" class="btn btn-success">Intensitas /2</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Intensitas /2</button>
+                                <button type="submit" class="btn btn-success" disabled>Intensitas /2</button>
                                 {% endif %}
                             </form>
                         </div>
-                        <div class="col-lg-4 col-md-4">
+                        <div class="p-1">
                             <form class="mb-2" action="/perbesar" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Perbesar x2</button>
+                                <button type="submit" class="btn btn-success">Perbesar x2</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Perbesar x2</button>
+                                <button type="submit" class="btn btn-success" disabled>Perbesar x2</button>
                                 {% endif %}
                             </form>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4">
+                        <div class="p-1">
                             <form class="mb-2" action="/perkecil" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Perkecil x2</button>
+                                <button type="submit" class="btn btn-success">Perkecil x2</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Perkecil x2</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <form class="mb-2" action="/histogram" method="POST" enctype="multipart/form-data">
-                                {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Histogram</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Histogram</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <form class="mb-2" action="/histeq" method="POST" enctype="multipart/form-data">
-                                {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Histogram Equalization</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Histogram Equalization</button>
+                                <button type="submit" class="btn btn-success" disabled>Perkecil x2</button>
                                 {% endif %}
                             </form>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4">
-                            <form class="mb-2" action="/blur" method="POST" enctype="multipart/form-data">
-                                {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Blur</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Blur</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <form class="mb-2" action="/sharp" method="POST" enctype="multipart/form-data">
-                                {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Sharp</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Sharp</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <form class="mb-2" action="/edge" method="POST" enctype="multipart/form-data">
-                                {% if filename %}
-                                <button type="submit" class="btn btn-block btn-primry">Edge</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-block btn-primry" disabled>Edge</button>
-                                {% endif %}
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12">
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="p-1">
                             <form class="mb-2" action="/crop" method="POST" enctype="multipart/form-data">
                                 <h4>Crop</h4>
                                 <label for="widht">Widht : </label>
                                 <input type="number" name="widthf" id="widthf"> - <input type="number" name="widthd" id="widthd">
                                 <label for="widht">Height : </label>
                                 <input type="number" name="heightf" id="heightf"> - <input type="number" name="heightd" id="heightd">
-                                <button type="submit" class="btn btn-primry">Crop</button>
+                                {% if filename %}
+                                <button type="submit" class="btn btn-success">Crop</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Crop</button>
+                                {% endif %}
                             </form>
                         </div>
                     </div>
-                    {% if filename1 %}
-                    <h3 class="mt-1">Histogram</h3>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <img class="mb-2" width="500" height="400" src="{{ url_for('static', filename=filename1) }}" alt="">
-                            </div>
-                            {% if filename2 %}
-                            <div class="col-lg-6 col-md-6">
-                                <img class="mb-2" width="500" height="400" src="{{ url_for('static', filename=filename2) }}" alt="">
-                            </div>
+                </div>
+                <div class="container-fluid hiddensec" id="task4">
+                    <h3>Task 4</h3>
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="p-1">
+                            <form class="mb-2" action="/histogram" method="POST" enctype="multipart/form-data">
+                                {% if filename %}
+                                <button type="submit" class="btn btn-success">Histogram</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Histogram</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                        <div class="p-1">
+                            <form class="mb-2" action="/histeq" method="POST" enctype="multipart/form-data">
+                                {% if filename %}
+                                <button type="submit" class="btn btn-success">Histogram Equalization</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Histogram Equalization</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid hiddensec" id="task5">
+                    <h3>Task 5</h3>
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="p-1">
+                            <form class="mb-2" action="/blur" method="POST" enctype="multipart/form-data">
+                                {% if filename %}
+                                <button type="submit" class="btn btn-success">Blur</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Blur</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                        <div class="p-1">
+                            <form class="mb-2" action="/sharp" method="POST" enctype="multipart/form-data">
+                                {% if filename %}
+                                <button type="submit" class="btn btn-success">Sharp</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Sharp</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                        <div class="p-1">
+                            <form class="mb-2" action="/edge" method="POST" enctype="multipart/form-data">
+                                {% if filename %}
+                                <button type="submit" class="btn btn-success">Edge</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Edge</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid hiddensec" id="task6">
+                    <h3>Task 5</h3>
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="p-1">
+                            {% if filename %}
+                            <a href="/threshold_view"><button type="button" class="btn btn-success">Threshold Base</button></a>
+                            {% else %}
+                            <button type="submit" class="btn btn-success" disabled>Threshold Base</button>
+                            {% endif %}
+                        </div>
+                        <div class="p-1">
+                            {% if filename %}
+                            <a href="/region_view"><button type="button" class="btn btn-success">Region Growth</button></a>
+                            {% else %}
+                            <button type="submit" class="btn btn-success" disabled>Region Growth</button>
                             {% endif %}
                         </div>
                     </div>
-                    {% endif %}
                 </div>
+                {% if filename1 %}
+                <h3 class="mt-1">Histogram</h3>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <img class="mb-2" width="500" height="400" src="{{ url_for('static', filename=filename1) }}" alt="">
+                        </div>
+                        {% if filename2 %}
+                        <div class="col-lg-6 col-md-6">
+                            <img class="mb-2" width="500" height="400" src="{{ url_for('static', filename=filename2) }}" alt="">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </main>

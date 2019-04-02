@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Threshold</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var cek = '';
+            $('input[type="file"]').change(function (e) {
+                if ($('input[type="file"]').get(0).files.length > 0) {
+                    var namafile = e.target.files[0].name;
+                    console.log(namafile);
+                    cek = namafile
+                    $('#namefile').val(namafile);
+                } else {
+                    $('#namefile').val('Silahkan Pilih File');
+                }
+            });
+            $('#unggah').click(function () {
+                if (!cek) {
+                    $('#namefile').val('Silahkan Pilih File');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header class="mb-3">
+        Threshold Base
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <div class="container-fluid center-inline">
+                    <div id='locate'>
+                        <h3>Before Process</h3>
+                        <img class="mb-4 mt-4 center" src="{{ url_for('static', filename=filename) }}" alt="">
+                        <div>
+                            <p id="size">Size : {{ width }} x {{ height }}</p>
+                        </div>
+                    </div>
+                    <form action="/threshold" method="POST">
+                        <label for="red">Red : </label>
+                        <input type="number" name="red" id="red" required>
+                        <label for="red">Green : </label>
+                        <input type="number" name="green" id="green" required>
+                        <label for="red">Blue : </label>
+                        <input type="number" name="blue" id="blue" required>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                    <form action="/back" method="POST">
+                        <button type="submit" class="btn btn-success">Home</button>
+                    </form>
+                    {% if filename1 %}
+                    <div id='locate'>
+                        <h3 style="padding-top: 20px;">After Process</h3>
+                        <img class="mb-4 mt-4 center" src="{{ url_for('static', filename=filename1) }}" alt="">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

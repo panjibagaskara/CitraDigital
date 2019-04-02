@@ -2,9 +2,10 @@ from PIL import Image
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 class gambar:
-    
+
     array,histo,pixel = [],[],[]
     width,height = 0,0
 
@@ -363,3 +364,110 @@ class gambar:
     def edge(self):
             kernel = [[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]
             self.proseskernel(kernel)
+
+    # Cek Threshold
+    def isThreshold(self, t, rgb):
+            status = False
+            t = int(t)
+            rgb = int(rgb)
+            if rgb >= t:
+                    status = True
+            return status
+    
+    # Algoritma Threshold Base
+    def thresholdbase(self,t_red,t_green,t_blue):
+            new = Image.new("RGB",(self.width,self.height),color=255) # Membuat gambar baru dengan width dan height sesuai dengan gambar
+            pixels = new.load() # Memuat gambar baru
+            for i in range(self.width):
+                    for j in range(self.height):
+                            pixel = self.array[i][j]
+                            # Jika pixel i,j termasuk, maka menjadi warna hitam, else maka menjadi putih
+                            if self.isThreshold(t_red,pixel[0]) and self.isThreshold(t_green,pixel[1]) and self.isThreshold(t_blue,pixel[2]):
+                                    pixels[i,j] = (0,0,0)
+                            else:
+                                    pixels[i,j] = (255,255,255)
+            new.save('gambar/img_threshold.jpg')
+    
+    # Algoritma Seed Region Growth non Recursion
+    def seedRegion(self, t, Seed):
+            new = Image.new("RGB",(self.width,self.height),color=255) # Membuat gambar baru dengan width dan height sesuai dengan gambar
+            pixels = new.load() # Memuat gambar baru
+
+            def rangeThreshold(t, Seed, Curpix): # Cek Jarak
+                status = False
+                t = int(t)
+                if Curpix - Seed in range(0-t, t+1):
+                    status = True
+                return status
+    
+            def safeZone(x, y):  # Cek Zona
+                if x >= 0 and y >= 0 and x < self.width and y < self.height:
+                    return True
+                else:
+                    return False
+
+            def cekTetangga(Seed, x, y, t): # Cek kandidat tetangga apakah termasuk kedalam threshold
+                tetangga = []
+                up = (x, y-1)
+                down = (x, y+1)
+                left = (x-1,y)
+                right = (x+1, y)
+                pusat = self.array[Seed[0]][Seed[1]]
+                # jika masih didalam zona aman
+                if safeZone(x,y-1):
+                        # Jika belum pernah ditetapkan sebagai tetangga yg sesuai threshold
+                        if visited[up[0]][up[1]] == False:
+                                calon = self.array[x][y-1]
+                                # Jika range antara seed dan current masih sesuai dengan threshold
+                                if rangeThreshold(t, pusat[0], calon[0]) and rangeThreshold(t, pusat[1], calon[1]) and rangeThreshold(t, pusat[2], calon[2]):
+                                        tetangga.append(up)
+                # Sama halnya seperti flow control pertama
+                if safeZone(x,y+1):
+                        if visited[down[0]][down[1]] == False:
+                                calon = self.array[x][y+1]
+                                if rangeThreshold(t, pusat[0], calon[0]) and rangeThreshold(t, pusat[1], calon[1]) and rangeThreshold(t, pusat[2], calon[2]):
+                                        tetangga.append(down)
+                if safeZone(x-1,y):
+                        if visited[left[0]][left[1]] == False:
+                                calon = self.array[x-1][y]
+                                if rangeThreshold(t, pusat[0], calon[0]) and rangeThreshold(t, pusat[1], calon[1]) and rangeThreshold(t, pusat[2], calon[2]):
+                                        tetangga.append(left)
+                if safeZone(x+1,y):
+                        if visited[right[0]][right[1]] == False:
+                                calon = self.array[x+1][y]
+                                if rangeThreshold(t, pusat[0], calon[0]) and rangeThreshold(t, pusat[1], calon[1]) and rangeThreshold(t, pusat[2], calon[2]):
+                                        tetangga.append(right)
+                # Jika ada tetangga yang tersedia
+                if len(tetangga) > 0:
+                        r = random.randint(0,len(tetangga)-1)
+                        # Mengeluarkan tetangga yang akan menjadi current
+                        return tetangga[r]
+                else:
+                        return None
+            
+            # Memulai proses pencarian
+            visited = [[False for j in range(self.height)] for i in range(self.width)]
+            search = True
+            stack, choosen = [],[]
+            current = Seed
+            while search:
+                visited[current[0]][current[1]] = True # Akan menjadi visited ketika sudah menjadi current
+                choosen_pixel = cekTetangga(Seed, current[0], current[1], t) # Cek tetangga
+                if choosen_pixel is not None:
+                        choosen.append(current) # Pixel yg termasuk akan dimasukkan kedalam list
+                        stack.append(current) # Memasukkan pixel - pixel sebelumnya supaya bisa di backtrack
+                        current = choosen_pixel
+                elif len(stack) > 0: # Jika tidak ada kandidat yg terpilih
+                        current = stack[-1] # Melakukan backtracking
+                        stack.pop(-1)
+                else:
+                        search = False # Jika sudah kosong, maka selesai sudah proses
+            
+            for k in range(self.width):
+                    for l in range(self.height):
+                            pix = (k,l)
+                            if pix in choosen: # Jika pix ada di dalam list choosen
+                                    pixels[k,l] = (0,0,0) # Diubah intensitasnya menjadi hitam
+                            else:
+                                    pixels[k,l] = self.array[k][l]
+            new.save('gambar/img_threshold.jpg')
