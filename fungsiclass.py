@@ -439,9 +439,9 @@ class gambar:
                                         tetangga.append(right)
                 # Jika ada tetangga yang tersedia
                 if len(tetangga) > 0:
-                        r = random.randint(0,len(tetangga)-1)
+                        # r = random.randint(0,len(tetangga)-1)
                         # Mengeluarkan tetangga yang akan menjadi current
-                        return tetangga[r]
+                        return tetangga
                 else:
                         return None
             
@@ -454,9 +454,11 @@ class gambar:
                 visited[current[0]][current[1]] = True # Akan menjadi visited ketika sudah menjadi current
                 choosen_pixel = cekTetangga(Seed, current[0], current[1], t) # Cek tetangga
                 if choosen_pixel is not None:
-                        choosen.append(current) # Pixel yg termasuk akan dimasukkan kedalam list
-                        stack.append(current) # Memasukkan pixel - pixel sebelumnya supaya bisa di backtrack
-                        current = choosen_pixel
+                        for i in range(len(choosen_pixel)):
+                                choosen.append(choosen_pixel[i]) # Pixel yg termasuk akan dimasukkan kedalam list
+                                # choosen.append(current) 
+                                stack.append(current) # Memasukkan pixel - pixel sebelumnya supaya bisa di backtrack
+                        current = choosen_pixel[-1] # Current diupdate dari hasil cek tetangga
                 elif len(stack) > 0: # Jika tidak ada kandidat yg terpilih
                         current = stack[-1] # Melakukan backtracking
                         stack.pop(-1)
@@ -471,3 +473,69 @@ class gambar:
                             else:
                                     pixels[k,l] = self.array[k][l]
             new.save('gambar/img_threshold.jpg')
+    
+    def penebalan(self, xf, xd, yf, yd):
+            self.grayscale() # Grayscale
+        #   Membuat gambar baru dengan width dan height sesuai dengan gambar
+            new = Image.new("RGB", (self.width, self.height), color=255)
+            pixels = new.load()  # Memuat gambar baru
+            for i in range(self.width): # Mengubah gambar menjadi hitam putih dengan threshold 128
+                    for j in range(self.height):
+                            pixel = self.array[i][j]
+                            if pixel[0] < 128:
+                                    pixels[i,j] = (0,0,0)
+                            else:
+                                    pixels[i,j] = (255,255,255)
+            new.save('gambar/img_process.jpg')
+            self.__init__() 
+            for i in range(self.width): # Memulai penebalan yang warnanya hitam dengan anggapan kernel atas 1 bawah 1 dan
+                    for j in range(self.height): # Hitam(0) adalah 1 dan Putih(255) adalah 0
+                            pixel = self.array[i][j]
+                            if i != 0:
+                                    if i in range(xf,xd+1) and j in range(yf,yd+1): # Jika i dan j termasuk yang ditebalkan
+                                            if pixel[0] == 0: # Jika pixel pada i,j berwarna hitam
+                                                pixels[i-1,j] = (0,0,0) # Pixel atasnya maka ikut menjadi 1 atau hitam(0)
+                                                pixels[i,j] = (0,0,0) # Begitupun pixel i,j
+                                            else:
+                                                pixels[i,j] = pixel
+                                    else:
+                                            pixels[i,j] = pixel
+                            else:
+                                    pixels[i,j] = pixel
+            new.save('gambar/img_process.jpg')
+            self.__init__()
+        
+    def penipisan(self, xf, xd, yf, yd):
+            self.grayscale()
+        #   Membuat gambar baru dengan width dan height sesuai dengan gambar
+            new = Image.new("RGB", (self.width, self.height), color=255)
+            pixels = new.load()  # Memuat gambar baru
+            for i in range(self.width): # Mengubah gambar menjadi hitam putih dengan threshold 128
+                    for j in range(self.height):
+                            pixel = self.array[i][j]
+                            if pixel[0] < 128:
+                                    pixels[i,j] = (0,0,0)
+                            else:
+                                    pixels[i,j] = (255,255,255)
+            new.save('gambar/img_process.jpg')
+            self.__init__() 
+            for i in range(self.width): # Memulai penipisan yang warnanya hitam dengan anggapan kernel atas 1 bawah 1 dan
+                    for j in range(self.height): # Hitam(0) adalah 1 dan Putih(255) adalah 0
+                            pixel = self.array[i][j]
+                            if i != 0:
+                                    if i in range(xf,xd+1) and j in range(yf,yd+1): # Jika i dan j termasuk yang ditipiskan
+                                            if pixel[0] == 0:  # Jika pixel pada i,j berwarna hitam
+                                                north = self.array[i-1][j] # Mengambil pixel utaranya (atasnya)
+                                                if north[0] == 255: # Jika atasnya Putih(255) atau 0
+                                                    pixels[i-1,j] = (255,255,255) # maka pixel yang terkena kernel
+                                                    pixels[i,j] = (255,255,255) # akan berubah menjadi putih
+                                                else:
+                                                    pixels[i, j] = pixel
+                                            else:
+                                                pixels[i,j] = pixel
+                                    else:
+                                            pixels[i,j] = pixel
+                            else:
+                                    pixels[i,j] = pixel
+            new.save('gambar/img_process.jpg')
+            self.__init__()

@@ -162,6 +162,27 @@ def region():
     image.seedRegion(t, Seed)
     return render_template('region.html', filename='img_process.jpg', filename1='img_threshold.jpg', width=image.width, height=image.height)
 
+
+@app.route('/tebal', methods=['POST'])
+def tebal():
+    xf = request.form['xf']
+    xd = request.form['xd']
+    yf = request.form['yf']
+    yd = request.form['yd']
+    xf, xd, yf, yd = image.parsing(xf,xd,yf,yd)
+    image.penebalan(xf,xd,yf,yd)
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+
+@app.route('/tipis', methods=['POST'])
+def tipis():
+    xf = request.form['xf']
+    xd = request.form['xd']
+    yf = request.form['yf']
+    yd = request.form['yd']
+    xf, xd, yf, yd = image.parsing(xf,xd,yf,yd)
+    image.penipisan(xf,xd,yf,yd)
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+
 if __name__ == "__main__":
     app.run(debug=True)
     # http_server = WSGIServer(('0.0.0.0',5000),app)
