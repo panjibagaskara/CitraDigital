@@ -483,59 +483,73 @@ class gambar:
                     for j in range(self.height):
                             pixel = self.array[i][j]
                             if pixel[0] < 128:
-                                    pixels[i,j] = (0,0,0)
-                            else:
                                     pixels[i,j] = (255,255,255)
+                            else:
+                                    pixels[i,j] = (0,0,0)
             new.save('gambar/img_process.jpg')
             self.__init__() 
-            for i in range(self.width): # Memulai penebalan yang warnanya hitam dengan anggapan kernel atas 1 bawah 1 dan
-                    for j in range(self.height): # Hitam(0) adalah 1 dan Putih(255) adalah 0
-                            pixel = self.array[i][j]
-                            if i != 0:
-                                    if i in range(xf,xd+1) and j in range(yf,yd+1): # Jika i dan j termasuk yang ditebalkan
-                                            if pixel[0] == 0: # Jika pixel pada i,j berwarna hitam
-                                                pixels[i-1,j] = (0,0,0) # Pixel atasnya maka ikut menjadi 1 atau hitam(0)
-                                                pixels[i,j] = (0,0,0) # Begitupun pixel i,j
-                                            else:
-                                                pixels[i,j] = pixel
-                                    else:
-                                            pixels[i,j] = pixel
+            SE = np.array([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
+            size_SE = SE.shape
+            xb,yb = [],[]
+            hotx,hoty = 1,1
+            for baris in range(size_SE[0]):
+                    for kolom in range(size_SE[1]):
+                            if SE[baris][kolom] == 1:
+                                    xb.append(-hotx+kolom)
+                                    yb.append(-hoty+baris)
+            new = Image.new("RGB", (self.width, self.height), color=255)
+            pixels = new.load()  # Memuat gambar baru
+            for baris in range(self.width):
+                    for kolom in range(self.height):
+                            pixel = self.array[baris][kolom]
+                            if pixel[0] == 255:
+                                for indeks in range(len(xb)):
+                                        xpos = kolom + xb[indeks]
+                                        ypos = baris + yb[indeks]
+                                        if (xpos >= 0 and xpos < self.height) and (ypos >= 0 and ypos < self.width):
+                                                pixels[ypos,xpos] = (0,0,0)
                             else:
-                                    pixels[i,j] = pixel
+                                pixels[baris,kolom] = (255,255,255)
             new.save('gambar/img_process.jpg')
             self.__init__()
+            
         
     def penipisan(self, xf, xd, yf, yd):
-            self.grayscale()
+            self.grayscale()  # Grayscale
         #   Membuat gambar baru dengan width dan height sesuai dengan gambar
             new = Image.new("RGB", (self.width, self.height), color=255)
             pixels = new.load()  # Memuat gambar baru
-            for i in range(self.width): # Mengubah gambar menjadi hitam putih dengan threshold 128
+            # Mengubah gambar menjadi hitam putih dengan threshold 128
+            for i in range(self.width):
                     for j in range(self.height):
                             pixel = self.array[i][j]
                             if pixel[0] < 128:
-                                    pixels[i,j] = (0,0,0)
+                                    pixels[i, j] = (255, 255, 255)
                             else:
-                                    pixels[i,j] = (255,255,255)
+                                    pixels[i, j] = (0, 0, 0)
             new.save('gambar/img_process.jpg')
-            self.__init__() 
-            for i in range(self.width): # Memulai penipisan yang warnanya hitam dengan anggapan kernel atas 1 bawah 1 dan
-                    for j in range(self.height): # Hitam(0) adalah 1 dan Putih(255) adalah 0
-                            pixel = self.array[i][j]
-                            if i != 0:
-                                    if i in range(xf,xd+1) and j in range(yf,yd+1): # Jika i dan j termasuk yang ditipiskan
-                                            if pixel[0] == 0:  # Jika pixel pada i,j berwarna hitam
-                                                north = self.array[i-1][j] # Mengambil pixel utaranya (atasnya)
-                                                if north[0] == 255: # Jika atasnya Putih(255) atau 0
-                                                    pixels[i-1,j] = (255,255,255) # maka pixel yang terkena kernel
-                                                    pixels[i,j] = (255,255,255) # akan berubah menjadi putih
-                                                else:
-                                                    pixels[i, j] = pixel
-                                            else:
-                                                pixels[i,j] = pixel
-                                    else:
-                                            pixels[i,j] = pixel
+            self.__init__()
+            SE = np.array([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
+            size_SE = SE.shape
+            xb, yb = [], []
+            hotx, hoty = 1, 1
+            for baris in range(size_SE[0]):
+                    for kolom in range(size_SE[1]):
+                            if SE[baris][kolom] == 1:
+                                    xb.append(-hotx+kolom)
+                                    yb.append(-hoty+baris)
+            new = Image.new("RGB", (self.width, self.height), color=255)
+            pixels = new.load()  # Memuat gambar baru
+            for baris in range(self.width):
+                    for kolom in range(self.height):
+                            pixel = self.array[baris][kolom]
+                            if pixel[0] == 0:
+                                for indeks in range(len(xb)):
+                                        xpos = kolom + xb[indeks]
+                                        ypos = baris + yb[indeks]
+                                        if (xpos >= 0 and xpos < self.height) and (ypos >= 0 and ypos < self.width):
+                                                pixels[ypos, xpos] = (255, 255, 255)
                             else:
-                                    pixels[i,j] = pixel
+                                pixels[baris, kolom] = (0, 0, 0)
             new.save('gambar/img_process.jpg')
             self.__init__()
