@@ -566,17 +566,17 @@ class gambar:
 		self.__init__()
 
 	# Kompresi Citra menggunakan Quantization
-	# def kompresi(self):
-	# 	self.grayscale()
-	# 	new = Image.new("RGB", (self.width, self.height), color=255) # Membuat gambar baru dengan width dan height sesuai dengan gambar
-	# 	pixels = new.load()  # Memuat gambar baru
-	# 	temp = []
-	# 	for idx in range(255):
-	# 		jumlah = 0
-	# 		for i in range(self.width):
-	# 			for j in range(self.height):
-	# 				pixel = self.array[i][j]
-	# 				if pixel[0] == idx:
-	# 					jumlah += 1
-	# 		temp.append(jumlah)
-	# 	new.save('gambar/img_process.jpg')
+	def kompresi(self):
+		self.grayscale()
+		new = Image.new("RGB", (self.width, self.height), color=255) # Membuat gambar baru dengan width dan height sesuai dengan gambar
+		pixels = new.load()  # Memuat gambar baru
+		temp = []
+		for idx in range(255):
+			jumlah = 0
+			for i in range(self.width):
+				for j in range(self.height):
+					pixel = self.array[i][j]
+					if pixel[0] == idx:
+						jumlah += 1
+			temp.append(jumlah)
+		new.save('gambar/img_process.jpg')
