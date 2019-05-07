@@ -36,6 +36,8 @@
                 $('#task6').removeClass('taskopen');
                 $('#task7').addClass('hiddensec');
                 $('#task7').removeClass('taskopen');
+                $('#task8').addClass('hiddensec');
+                $('#task8').removeClass('taskopen');
             });
             $('#3').click(function(){
                 $('#task3').addClass('taskopen');
@@ -50,6 +52,8 @@
                 $('#task6').removeClass('taskopen');
                 $('#task7').addClass('hiddensec');
                 $('#task7').removeClass('taskopen');
+                $('#task8').addClass('hiddensec');
+                $('#task8').removeClass('taskopen');
             });
             $('#4').click(function () {
                 $('#task4').addClass('taskopen');
@@ -64,6 +68,8 @@
                 $('#task6').removeClass('taskopen');
                 $('#task7').addClass('hiddensec');
                 $('#task7').removeClass('taskopen');
+                $('#task8').addClass('hiddensec');
+                $('#task8').removeClass('taskopen');
             });
             $('#5').click(function () {
                 $('#task5').addClass('taskopen');
@@ -78,6 +84,8 @@
                 $('#task6').removeClass('taskopen');
                 $('#task7').addClass('hiddensec');
                 $('#task7').removeClass('taskopen');
+                $('#task8').addClass('hiddensec');
+                $('#task8').removeClass('taskopen');
             });
             $('#6').click(function(){
                 $('#task6').addClass('taskopen');
@@ -92,6 +100,8 @@
                 $('#task5').removeClass('taskopen');
                 $('#task7').addClass('hiddensec');
                 $('#task7').removeClass('taskopen');
+                $('#task8').addClass('hiddensec');
+                $('#task8').removeClass('taskopen');
             });
             $('#7').click(function(){
                 $('#task7').addClass('taskopen');
@@ -106,6 +116,24 @@
                 $('#task5').removeClass('taskopen');
                 $('#task6').addClass('hiddensec');
                 $('#task6').removeClass('taskopen');
+                $('#task8').addClass('hiddensec');
+                $('#task8').removeClass('taskopen');
+            });
+            $('#8').click(function () {
+                $('#task8').addClass('taskopen');
+                $('#task8').removeClass('hiddensec');
+                $('#task2').addClass('hiddensec');
+                $('#task2').removeClass('taskopen');
+                $('#task3').addClass('hiddensec');
+                $('#task3').removeClass('taskopen');
+                $('#task4').addClass('hiddensec');
+                $('#task4').removeClass('taskopen');
+                $('#task5').addClass('hiddensec');
+                $('#task5').removeClass('taskopen');
+                $('#task6').addClass('hiddensec');
+                $('#task6').removeClass('taskopen');
+                $('#task7').addClass('hiddensec');
+                $('#task7').removeClass('taskopen');
             });
         });
     </script>
@@ -165,6 +193,7 @@
                         <li id="5">Task 5</li>
                         <li id="6">Task 6</li>
                         <li id="7">Task 7</li>
+                        <li id="8">Task 8</li>
                     </ul>
                 </div>
                 <div class="container-fluid hiddensec" id="task2">
@@ -352,6 +381,23 @@
                                 <div class="tebal">
                                     <button type="submit" value="tipis" name="tipis" class="btn btn-success">Penipisan</button>
                                 </div>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid hiddensec" id="task8">
+                    <h3>Task 8</h3>
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="p-1">
+                            <form class="mb-2" action="/kompresi" method="POST" enctype="multipart/form-data">
+                                {% if filename %}
+                                {% if size %}
+                                <p>Size : {{ size }} Bytes</p>
+                                {% endif %}
+                                <button type="submit" class="btn btn-success">Quantization</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success" disabled>Quantization</button>
                                 {% endif %}
                             </form>
                         </div>

@@ -53,7 +53,7 @@ def uploadimage():
         copyfile("gambar/img_process.jpg","gambar/img_process_normal.jpg")
     global image
     image = fungsiclass.gambar()
-    return render_template('index.html',filename='img_process.jpg', width=image.width, height=image.height)
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height, size=os.stat('gambar/img_process.jpg').st_size)
 
 @app.route('/normal', methods=['POST'])
 def normal():
@@ -182,6 +182,11 @@ def tipis():
     xf, xd, yf, yd = image.parsing(xf,xd,yf,yd)
     image.penipisan(xf,xd,yf,yd)
     return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+
+@app.route('/kompresi', methods=['POST'])
+def kompresi():
+    image.kompresi()
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height, size=os.stat('gambar/img_process.jpg').st_size)
 
 if __name__ == "__main__":
     app.run(debug=True)
