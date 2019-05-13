@@ -485,7 +485,7 @@ class gambar:
 		new.save('gambar/img_threshold.jpg')
 
 	# Menebalkan citra
-	def penebalan(self, xf, xd, yf, yd):
+	def penebalan(self):
 		self.grayscale() # Grayscale
 		#   Membuat gambar baru dengan width dan height sesuai dengan gambar
 		new = Image.new("RGB", (self.width, self.height), color=255)
@@ -525,7 +525,7 @@ class gambar:
 		self.__init__()
 
 	# Menipiskan citra
-	def penipisan(self, xf, xd, yf, yd):
+	def penipisan(self):
 		self.grayscale()  # Grayscale
 		#   Membuat gambar baru dengan width dan height sesuai dengan gambar
 		new = Image.new("RGB", (self.width, self.height), color=255)

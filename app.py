@@ -59,7 +59,7 @@ def uploadimage():
 def normal():
     copyfile("gambar/img_process_normal.jpg","gambar/img_process.jpg")
     image.resetNormal()
-    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
+    return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height, size=os.stat('gambar/img_process.jpg').st_size)
 
 @app.route('/grayscale', methods=['POST'])
 def grayscaleimage():
@@ -165,22 +165,12 @@ def region():
 
 @app.route('/tebal', methods=['POST'])
 def tebal():
-    xf = request.form['xf']
-    xd = request.form['xd']
-    yf = request.form['yf']
-    yd = request.form['yd']
-    xf, xd, yf, yd = image.parsing(xf,xd,yf,yd)
-    image.penebalan(xf,xd,yf,yd)
+    image.penebalan()
     return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/tipis', methods=['POST'])
 def tipis():
-    xf = request.form['xf']
-    xd = request.form['xd']
-    yf = request.form['yf']
-    yd = request.form['yd']
-    xf, xd, yf, yd = image.parsing(xf,xd,yf,yd)
-    image.penipisan(xf,xd,yf,yd)
+    image.penipisan()
     return render_template('index.html', filename='img_process.jpg', width=image.width, height=image.height)
 
 @app.route('/kompresi', methods=['POST'])

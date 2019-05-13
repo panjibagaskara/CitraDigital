@@ -363,24 +363,16 @@
                         <div class="p-1">
                             <form class="mb-2" action="/tebal" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <label for="widht">X : </label>
-                                <input type="number" name="xf" id="xf"> - <input type="number" name="xd" id="xd">
-                                <label for="widht">Y : </label>
-                                <input type="number" name="yf" id="yf"> - <input type="number" name="yd" id="yd">
-                                <div class="tebal">
-                                    <button type="submit" value="tebal" name="tebal" class="btn btn-success">Penebalan</button>
-                                </div>
+                                <button type="submit" value="tebal" name="tebal" class="btn btn-success">Penebalan</button>
+                                {% else %}
+                                <button type="submit" value="tebal" name="tebal" class="btn btn-success" disabled>Penebalan</button>
                                 {% endif %}
                             </form>
                             <form class="mb-2" action="/tipis" method="POST" enctype="multipart/form-data">
                                 {% if filename %}
-                                <label for="widht">X : </label>
-                                <input type="number" name="xf" id="xf"> - <input type="number" name="xd" id="xd">
-                                <label for="widht">Y : </label>
-                                <input type="number" name="yf" id="yf"> - <input type="number" name="yd" id="yd">
-                                <div class="tebal">
-                                    <button type="submit" value="tipis" name="tipis" class="btn btn-success">Penipisan</button>
-                                </div>
+                                <button type="submit" value="tipis" name="tipis" class="btn btn-success">Penipisan</button>
+                                {% else %}
+                                <button type="submit" value="tipis" name="tipis" class="btn btn-success" disabled>Penipisan</button>
                                 {% endif %}
                             </form>
                         </div>
