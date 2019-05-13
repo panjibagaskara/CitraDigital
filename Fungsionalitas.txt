@@ -1,0 +1,12 @@
+List yang selesai:
+1. Buka Gambar
+2. Grayscale
+3. Penambahan, Pengurangan, Perkalian, Pembagian (Intensitas), Perbesar, Perkecil (Gambar) dan Crop
+4. Histogram
+5. Konvolusi (Blur, Sharp, Edge)
+6. Thresholding (Threshold Base, Region Growth)
+7. Penebalan dan Penipisan (Tanpa batasan/semua pixel)
+8. Kompresi Quantization dari 8 bit menjadi 7 bit
+
+List tidak selesai:
+1. Histogram Equalization
