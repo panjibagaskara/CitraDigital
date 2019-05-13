@@ -183,15 +183,15 @@ class gambar:
 
 	# Memotong gambar kedalam ukuran tertentu
 	def crop(self,widthf,widthd,heightf,heightd):
-		new = Image.new("RGB",(widthd-widthf+1,heightd-heightf+1),color=255) # Membuat gambar baru dengan width dan height sesuai yg di crop
+		new = Image.new("RGB",(widthd-widthf,heightd-heightf),color=255) # Membuat gambar baru dengan width dan height sesuai yg di crop
 		pixels = new.load() # Memuat gambar baru
 		temp_i = 0 # Inisialisasi temp_i
-		for i in range(widthf,widthd+1): # Menjelajahi yg ingin di crop
+		for i in range(widthf,widthd): # Menjelajahi yg ingin di crop
 			temp_j = 0 # Inisialisasi temp_j
-			for j in range(heightf,heightd+1): # Menjelajahi yg ingin di crop
+			for j in range(heightf,heightd): # Menjelajahi yg ingin di crop
 				pixels[temp_i,temp_j] = self.array[i][j] # Mengisi pixel temp_i , temp_j dengan nilai pixel ke i,j
 				temp_j += 1 # Increment temp_j
-				temp_i += 1 # Increment temp_i
+			temp_i += 1 # Increment temp_i
 		new.save('gambar/img_process.jpg') # Save gambar yg sudah diproses 
 		self.__init__()
 
